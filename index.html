@@ -1,0 +1,764 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Studio 473</title>
+<meta name="theme-color" content="#090c11">
+<meta name="description" content="Window tint, number plates, tire shine, car photography and wedding videography. Book on WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,800;1,800&family=Hanken+Grotesk:wght@400;500;700&family=Spline+Sans+Mono:wght@400;500&display=swap">
+<style>
+/* Layout concept: a night-time detailing bay. One lit car on a reflective floor, each service re-lights it. */
+:root{
+  color-scheme:dark;
+  --ink:#090c11; --bay:#10151d; --bay-2:#19202b; --line:#2a333f;
+  --fg:#eff2f5; --mute:#a3adba; --plate:#ffcf33; --wa:#25d366; --on-accent:#090c11;
+  --display:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --body:"Hanken Grotesk","Segoe UI",system-ui,sans-serif;
+  --mono:"Spline Sans Mono",ui-monospace,Consolas,monospace;
+  --gutter:clamp(16px,4vw,56px);
+  --t:#74a7ff;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--fg);font:400 17px/1.55 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--ink)}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+h1,h2,h3,p,ol{margin:0;padding:0}
+h1,h2,h3{font-family:var(--display);font-weight:800;text-transform:uppercase;line-height:.98;letter-spacing:.005em;text-wrap:balance}
+.wrap{padding-left:max(var(--gutter),env(safe-area-inset-left,0px));padding-right:max(var(--gutter),env(safe-area-inset-right,0px));max-width:1560px;margin-inline:auto}
+.tag{font:500 12.5px/1.3 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--mute)}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in oklab,var(--ink) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:66px}
+.logo{display:inline-flex;align-items:center;gap:.5em;padding:.2em .7em;background:var(--plate);color:#11141a;border-radius:4px;box-shadow:inset 0 0 0 2px #11141a,0 0 0 1px var(--plate);font:800 22px/1.1 var(--display);letter-spacing:.09em;text-decoration:none;white-space:nowrap}
+.nav{display:flex;align-items:center;gap:clamp(14px,2.2vw,32px);font-size:15px}
+.nav a{text-decoration:none;color:var(--mute);transition:color .2s}
+.nav a:hover{color:var(--fg)}
+.nav .call{color:var(--on-accent);background:var(--wa);font-weight:700;padding:.55em 1em;border-radius:3px;white-space:nowrap}
+.nav .call:hover{color:var(--on-accent)}
+
+/* hero */
+.hero{position:relative;overflow:hidden;isolation:isolate;--t:#74a7ff;border-bottom:1px solid var(--line)}
+.wash{position:absolute;inset:0;z-index:-2;transition:background 1s ease;background:radial-gradient(52% 62% at 50% 52%,color-mix(in oklab,var(--t) 36%,transparent),transparent 74%),var(--ink)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,20rem) minmax(0,1fr) minmax(0,20rem);column-gap:clamp(12px,2vw,36px);padding-block:clamp(28px,4vw,56px) 0;align-items:start}
+.intro{position:relative;z-index:2;display:grid;gap:18px;min-width:0}
+.intro h1{font-size:clamp(46px,5vw,76px)}
+.intro .lede{color:var(--mute);font-size:17px}
+.thumbs{display:flex;gap:10px;align-items:center}
+.thumb{width:78px;height:56px;border-radius:3px;overflow:hidden;transition:transform .25s;flex:none}
+.thumb:hover{transform:translateY(-3px)}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.more{width:56px;height:56px;background:var(--fg);color:var(--ink);font:800 21px/1 var(--display);border-radius:3px;flex:none}
+
+.stage{position:relative;min-height:clamp(340px,42vw,640px);align-self:stretch}
+.word-box{position:absolute;inset:0;z-index:-1;pointer-events:none;display:grid;place-items:start center}
+.word{grid-area:1/1;font:italic 800 clamp(96px,17vw,300px)/.9 var(--display);text-transform:uppercase;letter-spacing:-.01em;white-space:nowrap;color:color-mix(in oklab,var(--t) 40%,transparent);visibility:hidden;margin-top:.04em}
+.word.on{visibility:visible}
+#car{position:absolute;left:-12%;top:0;width:124%;height:100%;display:block;pointer-events:none}
+.fallback{position:absolute;inset:8% 0;width:100%;height:84%;object-fit:cover;border-radius:3px;display:none}
+.no3d .fallback{display:block}
+.no3d #car{display:none}
+.flash{position:absolute;left:-12%;width:124%;top:0;height:100%;background:#fff;opacity:0;pointer-events:none}
+.vf{position:absolute;inset:6% 2% 10%;pointer-events:none;opacity:0;transition:opacity .4s;font:500 13px/1.3 var(--mono);letter-spacing:.06em}
+.vf.on{opacity:1}
+.vf i{position:absolute;width:28px;height:28px;border:2px solid var(--fg)}
+.vf i:nth-child(1){left:0;top:0;border-right:0;border-bottom:0}
+.vf i:nth-child(2){right:0;top:0;border-left:0;border-bottom:0}
+.vf i:nth-child(3){left:0;bottom:0;border-right:0;border-top:0}
+.vf i:nth-child(4){right:0;bottom:0;border-left:0;border-top:0}
+.vf b{position:absolute;left:38px;top:8px;font-weight:500}
+.vf b::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:#ff3b3b;margin-right:8px;vertical-align:1px}
+.vf.still b::before{display:none}
+.readout{position:absolute;left:50%;bottom:3%;transform:translateX(-50%);white-space:nowrap;font:500 13px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--fg);background:color-mix(in oklab,var(--ink) 74%,transparent);padding:.65em 1em;border-radius:3px}
+
+.panel{position:relative;z-index:2;display:grid;gap:18px;min-width:0}
+.panel h2{font-size:clamp(38px,3.6vw,54px)}
+.panel .desc{color:var(--mute);font-size:16px}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}
+.opt{min-height:44px;padding:0 15px;border:1.5px solid var(--line);border-radius:3px;font-weight:500;font-size:15px;transition:background .2s,color .2s,border-color .2s}
+.opt:hover{border-color:var(--fg)}
+.opt[aria-pressed="true"]{background:var(--t);border-color:var(--t);color:var(--on-accent)}
+.hint{font-size:15px;color:var(--fg);min-height:1.5em;margin-top:9px}
+.cta{display:flex;align-items:center;justify-content:center;gap:.6em;min-height:56px;padding:0 20px;background:var(--t);color:var(--on-accent);text-decoration:none;font:800 22px/1 var(--display);letter-spacing:.04em;text-transform:uppercase;border-radius:3px;transition:transform .15s,filter .2s,background 1s;text-align:center}
+.cta:hover{filter:brightness(1.1);transform:translateY(-2px)}
+.cta svg{width:22px;height:22px;flex:none}
+.preview{font-size:14px;color:var(--mute)}
+
+.tabs{grid-column:1/-1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin-top:clamp(18px,2vw,30px);border-top:1px solid var(--line)}
+.tab{position:relative;padding:18px 12px 20px 0;text-align:left;font:800 clamp(21px,2vw,30px)/1 var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--mute);transition:color .25s}
+.tab small{display:block;font:500 12px/1.3 var(--mono);letter-spacing:.06em;margin-bottom:7px;text-transform:uppercase}
+.tab:hover,.tab[aria-selected="true"]{color:var(--fg)}
+.tab span{position:absolute;left:0;right:12px;top:-1px;height:3px;background:var(--t);transform:scaleX(0);transform-origin:left}
+.tab[aria-selected="true"] span{transform:scaleX(1)}
+
+/* sections */
+section.block{padding-block:clamp(64px,8vw,120px)}
+.head{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px 40px;align-items:end;margin-bottom:clamp(28px,4vw,52px)}
+.head h2{font-size:clamp(50px,7vw,108px)}
+.head p{color:var(--mute);max-width:34em}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,1.6vw,24px)}
+.card{display:grid;grid-template-rows:auto 1fr;gap:16px;text-decoration:none;min-width:0}
+.card figure{margin:0;aspect-ratio:4/5;overflow:hidden;border-radius:3px;background:var(--bay)}
+.card img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.card:hover img{transform:scale(1.05)}
+.card div{display:grid;gap:8px;align-content:start}
+.card h3{font-size:34px}
+.card p{color:var(--mute);font-size:16px}
+.card .go{font-weight:700;font-size:15px;color:var(--fg);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--plate)}
+
+.reel{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:clamp(14px,1.6vw,24px)}
+.clip{position:relative;margin:0;border-radius:3px;overflow:hidden;background:var(--bay);aspect-ratio:16/9}
+.reel .clip{aspect-ratio:auto;min-height:clamp(240px,31vw,500px)}
+.clip video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.clip figcaption{position:absolute;left:0;right:0;bottom:0;padding:48px 20px 18px;background:linear-gradient(transparent,rgba(5,7,11,.85));font:800 clamp(25px,2.6vw,38px)/1 var(--display);text-transform:uppercase}
+
+.wedding{background:var(--bay);border-block:1px solid var(--line)}
+.wedding-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:clamp(14px,1.6vw,24px)}
+.wedding-side{display:grid;grid-template-rows:1fr 1fr;gap:clamp(14px,1.6vw,24px);min-height:0}
+.wedding-side button{overflow:hidden;border-radius:3px;min-height:180px}
+.wedding-side img{width:100%;height:100%;object-fit:cover}
+.films{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:clamp(24px,3vw,40px);border-top:1px solid var(--line)}
+.films div{padding:18px 18px 0 0;display:grid;gap:6px;min-width:0}
+.films h3{font-size:32px}
+.films p{font-size:16px;color:var(--mute)}
+
+.grid-gal{columns:4 240px;column-gap:clamp(12px,1.4vw,20px)}
+.grid-gal button{display:block;width:100%;margin-bottom:clamp(12px,1.4vw,20px);break-inside:avoid;border-radius:3px;overflow:hidden}
+.grid-gal img{width:100%;height:auto;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.grid-gal button:hover img{transform:scale(1.04)}
+
+.book{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(36px,6vw,96px);align-items:start}
+.book h2{font-size:clamp(50px,7vw,108px)}
+.steps{list-style:none;display:grid;gap:0;margin-top:30px;counter-reset:s;border-top:1px solid var(--line)}
+.steps li{counter-increment:s;display:grid;grid-template-columns:48px minmax(0,1fr);padding:16px 0;border-bottom:1px solid var(--line)}
+.steps li::before{content:counter(s);font:800 34px/1 var(--display);color:var(--plate)}
+.form{display:grid;gap:18px;background:var(--bay);border:1px solid var(--line);border-radius:4px;padding:clamp(20px,3vw,36px)}
+.form label{display:grid;gap:7px;font-size:15px;font-weight:500}
+.form input,.form select{width:100%;min-height:50px;padding:0 13px;background:var(--ink);color:var(--fg);border:1px solid var(--line);border-radius:3px;font:400 17px var(--body)}
+.form .cta{background:var(--wa)}
+.num{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;font-size:15px;color:var(--mute)}
+.num strong{font:500 18px var(--mono);color:var(--fg);user-select:all}
+.copy{border:1px solid var(--line);padding:.4em .85em;border-radius:3px;font-size:14px}
+.copy:hover{border-color:var(--fg)}
+
+footer{border-top:1px solid var(--line);padding-block:30px 96px;font-size:14px;color:var(--mute)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 30px;justify-content:space-between;align-items:center}
+
+.float{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:35;width:60px;height:60px;border-radius:50%;background:var(--wa);color:var(--on-accent);display:grid;place-items:center;box-shadow:0 10px 28px rgba(0,0,0,.45);transition:transform .2s}
+.float:hover{transform:scale(1.08)}
+.float svg{width:30px;height:30px}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;background:rgba(5,7,11,.93)}
+.lb-box{position:relative;width:min(1200px,100%);display:grid;gap:12px}
+.lb-bar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.lb img{width:100%;max-height:78vh;object-fit:contain;border-radius:3px}
+.lb-btn{width:46px;height:46px;background:var(--bay-2);border-radius:3px;font-size:22px;line-height:1;flex:none}
+.lb-btn:hover{background:var(--line)}
+.lb-nav{display:flex;gap:8px}
+
+@media (max-width:1100px){
+  .hero-grid{grid-template-columns:minmax(0,1fr);row-gap:0}
+  .intro{order:1;max-width:40rem}
+  .stage{order:2;min-height:clamp(270px,62vw,520px);margin-top:14px}
+  #car,.flash{left:0;width:100%}
+  .tabs{order:3;display:flex;overflow-x:auto;scrollbar-width:none;margin-top:6px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:none;padding-right:26px}
+  .tab span{right:26px}
+  .panel{order:4;padding-block:22px 34px;max-width:40rem}
+  .word{font-size:clamp(84px,25vw,230px)}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nav a:not(.call){display:none}
+}
+@media (max-width:760px){
+  .head,.book,.reel,.wedding-grid{grid-template-columns:minmax(0,1fr)}
+  .reel .clip{min-height:0;aspect-ratio:16/9}
+  .wedding-side{grid-template-rows:none;grid-template-columns:1fr 1fr}
+  .wedding-side button{min-height:0;aspect-ratio:1}
+  .films{grid-template-columns:minmax(0,1fr)}
+  .films div{padding-bottom:14px;border-bottom:1px solid var(--line)}
+  .grid-gal{columns:2 130px}
+}
+@media (max-width:520px){
+  .cards{grid-template-columns:minmax(0,1fr)}
+  .card figure{aspect-ratio:16/11}
+  .thumbs{display:none}
+  .intro h1{font-size:50px}
+  .vf{font-size:11px}
+  .readout{font-size:11.5px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important}
+}
+</style>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#home">STUDIO 473</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#cars">Cars</a>
+      <a href="#weddings">Weddings</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#book">Book</a>
+      <a class="call" href="https://wa.me/14734585646" target="_blank" rel="noopener">WhatsApp us</a>
+    </nav>
+  </div>
+</header>
+
+<main id="home">
+  <div class="hero" id="hero">
+    <div class="wash" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div class="intro">
+        <span class="tag">Car care + camera work</span>
+        <h1>We finish cars and film the big day.</h1>
+        <p class="lede">Window tint, number plates and tire shine for your car. Car photography and wedding films when the moment deserves a proper camera.</p>
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+
+      <div class="stage" id="stage">
+        <div class="word-box" id="words" aria-hidden="true"></div>
+        <img class="fallback" src="media/hero-rear.jpg" alt="Black sports car on an open road">
+        <canvas id="car" role="img" aria-label="3D car that changes to show each service"></canvas>
+        <div class="flash" id="flash" aria-hidden="true"></div>
+        <div class="vf" id="vf" aria-hidden="true"><i></i><i></i><i></i><i></i><b id="vf-text"></b></div>
+        <div class="readout" id="readout" aria-live="polite"></div>
+      </div>
+
+      <div class="panel" id="panel">
+        <span class="tag" id="p-tag"></span>
+        <h2 id="p-title"></h2>
+        <p class="desc" id="p-desc"></p>
+        <div>
+          <span class="tag" id="p-label"></span>
+          <div class="opts" id="opts" role="group"></div>
+          <p class="hint" id="p-hint"></p>
+        </div>
+        <a class="cta" id="p-cta" target="_blank" rel="noopener"></a>
+        <p class="preview" id="p-preview"></p>
+      </div>
+
+      <div class="tabs" id="tabs" role="tablist" aria-label="Services"></div>
+    </div>
+  </div>
+
+  <section class="block" id="cars">
+    <div class="wrap">
+      <div class="head">
+        <h2>For the car</h2>
+        <p>Four jobs, done carefully. Message us your car's make and model and we'll tell you what it needs.</p>
+      </div>
+      <div class="cards">
+        <a class="card" target="_blank" rel="noopener" href="https://wa.me/14734585646?text=Hi%20Studio%20473%2C%20I%27d%20like%20to%20ask%20about%20window%20tint.">
+          <figure><img loading="lazy" src="media/tint-1.jpg" alt="Silver sedan with dark tinted windows"></figure>
+          <div><h3>Window tint</h3><p>Privacy and a sleeker look, in the shade you choose.</p><span class="go">Ask about tint</span></div>
+        </a>
+        <a class="card" target="_blank" rel="noopener" href="https://wa.me/14734585646?text=Hi%20Studio%20473%2C%20I%27d%20like%20to%20ask%20about%20number%20plates.">
+          <figure><img loading="lazy" src="media/plate-1.jpg" alt="Number plate on the back of a dark car"></figure>
+          <div><h3>Number plates</h3><p>Clean, sharp plates made for your registration.</p><span class="go">Ask about plates</span></div>
+        </a>
+        <a class="card" target="_blank" rel="noopener" href="https://wa.me/14734585646?text=Hi%20Studio%20473%2C%20I%27d%20like%20to%20ask%20about%20tire%20shine.">
+          <figure><img loading="lazy" src="media/shine-1.jpg" alt="Close view of a polished alloy wheel and black tire"></figure>
+          <div><h3>Tire shine</h3><p>Deep black sidewalls, from satin to wet look.</p><span class="go">Ask about tire shine</span></div>
+        </a>
+        <a class="card" target="_blank" rel="noopener" href="https://wa.me/14734585646?text=Hi%20Studio%20473%2C%20I%27d%20like%20to%20book%20car%20photography.">
+          <figure><img loading="lazy" src="media/photo-1.jpg" alt="White supercar photographed on a coastal road"></figure>
+          <div><h3>Car photography</h3><p>Photos for sale listings, social media or your wall.</p><span class="go">Book a shoot</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0" aria-label="Car video reel">
+    <div class="wrap reel">
+      <figure class="clip"><video muted loop playsinline preload="none" poster="media/polish-poster.jpg" data-src="media/polish.mp4" aria-label="Studio light moving across glossy black car paint"></video><figcaption>Light on paint is the whole shot</figcaption></figure>
+      <figure class="clip"><video muted loop playsinline preload="none" poster="media/sport-poster.jpg" data-src="media/sport.mp4" aria-label="Black sports car in a dark garage"></video><figcaption>Lit for the lens</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="block wedding" id="weddings">
+    <div class="wrap">
+      <div class="head">
+        <h2>For the wedding</h2>
+        <p>Same eye, different day. We stay out of the way and keep rolling, so you get the moments you didn't see yourself.</p>
+      </div>
+      <div class="wedding-grid">
+        <figure class="clip"><video muted loop playsinline preload="none" poster="media/wedding-poster.jpg" data-src="media/wedding.mp4" aria-label="Bride and groom sitting together on rocks by the sea"></video><figcaption>Your day, cut like a film</figcaption></figure>
+        <div class="wedding-side">
+          <button type="button" data-gal="wedding" data-i="0" aria-label="View video camera filming a wedding"><img loading="lazy" src="media/wed-cam.jpg" alt=""></button>
+          <button type="button" data-gal="wedding" data-i="1" aria-label="View bride and groom by the sea"><img loading="lazy" src="media/wed-1.jpg" alt=""></button>
+        </div>
+      </div>
+      <div class="films">
+        <div><h3>Highlight film</h3><p>The best moments in one short, shareable film.</p></div>
+        <div><h3>Ceremony</h3><p>The vows and the walk down the aisle, in full.</p></div>
+        <div><h3>Full day</h3><p>From getting ready to the last dance.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="gallery">
+    <div class="wrap">
+      <div class="head">
+        <h2>The look</h2>
+        <p>The finish and framing we aim for, on the road and at the altar. Tap any photo to see it larger.</p>
+      </div>
+      <div class="grid-gal" id="gal"></div>
+    </div>
+  </section>
+
+  <section class="block wedding" id="book">
+    <div class="wrap book">
+      <div>
+        <h2>Book in one message</h2>
+        <ol class="steps">
+          <li><span>Tell us the service and your car or wedding date.</span></li>
+          <li><span>We reply on WhatsApp with the price and open times.</span></li>
+          <li><span>Bring the car in, or we meet you at the venue.</span></li>
+        </ol>
+      </div>
+      <form class="form" id="form">
+        <label for="book-name">Your name
+          <input id="book-name" autocomplete="name" placeholder="Your name">
+        </label>
+        <label for="book-service">What do you need?
+          <select id="book-service">
+            <option>Window tint</option>
+            <option>Number plates</option>
+            <option>Tire shine</option>
+            <option>Car photography</option>
+            <option>Wedding videography</option>
+          </select>
+        </label>
+        <label for="book-detail">Car model or wedding date
+          <input id="book-detail" placeholder="e.g. Toyota Hilux, or 14 February">
+        </label>
+        <a class="cta" id="book-send" target="_blank" rel="noopener"></a>
+        <div class="num"><span>Or message us directly:</span><strong id="number">+1 (473) 458-5646</strong><button type="button" class="copy" id="copy">Copy number</button></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="#home">STUDIO 473</a>
+    <span>Window tint · Number plates · Tire shine · Car photography · Wedding videography</span>
+    <span>Photos: Unsplash. Video: Pexels.</span>
+  </div>
+</footer>
+
+<a class="float" href="https://wa.me/14734585646" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"/><path d="M8.8 8.6c.2-.5.5-.6.9-.6l.6.1 1 2.1-.7 1c.6 1.1 1.3 1.8 2.5 2.4l1-.8 2 1.1v.6c-.1.9-1.2 1.5-2.2 1.3-3-.6-5.4-3-5.7-5.8 0-.6.2-1 .6-1.4z" fill="currentColor" stroke="none"/></svg>
+</a>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+  <div class="lb-box">
+    <div class="lb-bar">
+      <span class="tag" id="lb-count"></span>
+      <div class="lb-nav">
+        <button class="lb-btn" id="lb-prev" type="button" aria-label="Previous photo">&#8249;</button>
+        <button class="lb-btn" id="lb-next" type="button" aria-label="Next photo">&#8250;</button>
+        <button class="lb-btn" id="lb-close" type="button" aria-label="Close photo viewer">&#215;</button>
+      </div>
+    </div>
+    <img id="lb-img" alt="">
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+<script>
+(function(){
+"use strict";
+const $=(s,r)=>(r||document).querySelector(s), $$=(s,r)=>Array.from((r||document).querySelectorAll(s));
+const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const T=d=>reduced?0:d;
+const WA="14734585646";
+const wa=t=>"https://wa.me/"+WA+"?text="+encodeURIComponent(t);
+const ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg>';
+
+const PICS={
+  tint:[["tint-1","Silver sedan with tinted windows"],["tint-2","Dark sedan at dusk"],["hero-rear","Black sports car on the road"],["photo-3","Grey saloon by the water"]],
+  plates:[["plate-1","Number plate on a dark car"],["hero-rear","Plate on a black sports car"],["tint-1","Rear of a silver sedan"],["photo-4","Coupe above the harbour"]],
+  shine:[["shine-1","Alloy wheel and black tire"],["shine-2","Hand washing a black car"],["shine-3","Pressure washing a sports car"],["photo-3","Grey saloon by the water"]],
+  photo:[["photo-1","White supercar on a coastal road"],["photo-2","Sports cars in a dark garage"],["photo-3","Grey saloon by the water"],["photo-4","Coupe above the harbour"],["hero-rear","Rolling shot of a black sports car"]],
+  wedding:[["wed-cam","Video camera filming a wedding"],["wed-1","Bride and groom by the sea"],["wed-2","Bouquet in low light"],["wed-3","Rings and hands"],["wed-4","Couple walking under palms"],["wed-5","Couple in front of their guests"]]
+};
+const S=[
+ {id:"tint",tab:"Window tint",tag:"Tint",word:"Tint",t:"#74a7ff",paint:["#1d2a3d",.6,.34],title:"Window tint",desc:"Darker glass and more privacy. Pick a shade and we fit the film to your windows. We'll confirm what's allowed on your vehicle first.",label:"Shade: % of light let through",opts:[
+   {l:"70%",v:.2,h:"Lightest. A subtle change.",r:"VLT 70%"},{l:"35%",v:.56,h:"Balanced look, clear view.",r:"VLT 35%"},{l:"20%",v:.76,h:"Dark and private.",r:"VLT 20%"},{l:"5%",v:.95,h:"Limo black.",r:"VLT 5%"}],def:2,msg:o=>"window tint with a "+o.l+" shade",cta:"Book tint",cam:[[1.5,1.3,7.3],[.3,.86,0]]},
+ {id:"plates",tab:"Number plates",tag:"Plates",word:"Plates",t:"#ffcf33",paint:["#8d1420",.5,.32],title:"Number plates",desc:"Clean, sharp plates made for your registration and fitted straight.",label:"Plate style",opts:[
+   {l:"Standard",v:"std",h:"Crisp printed plate.",r:"Plate: standard"},{l:"Raised 3D",v:"raised",h:"Lettering that stands off the plate.",r:"Plate: raised 3D"},{l:"Custom",v:"custom",h:"Tell us the look you have in mind.",r:"Plate: custom"}],def:1,msg:o=>o.l.toLowerCase()+" number plates",cta:"Order plates",cam:[[6.5,1.2,3.3],[1.45,.7,0]]},
+ {id:"shine",tab:"Tire shine",tag:"Shine",word:"Shine",t:"#5fe3d2",paint:["#6f7883",.75,.3],title:"Tire shine",desc:"The finishing touch. Even, deep black sidewalls with as much shine as you want.",label:"Finish",opts:[
+   {l:"Satin",v:[.46,.3],h:"Clean factory-fresh black.",r:"Sheen: satin"},{l:"Gloss",v:[.2,.8],h:"Clear shine you can see from the kerb.",r:"Sheen: gloss"},{l:"Wet look",v:[.06,1],h:"Mirror shine for show days.",r:"Sheen: wet look"}],def:1,msg:o=>"tire shine with a "+o.l.toLowerCase()+" finish",cta:"Book tire shine",cam:[[-5.2,.72,6.1],[-.95,.5,.35]]},
+ {id:"photo",tab:"Car photography",tag:"Photo",word:"Shoot",t:"#ff9a4d",paint:["#b4470f",.65,.3],title:"Car photography",desc:"Sharp, well-lit photos of your car for sale listings, social media or just to keep.",label:"Shoot type",opts:[
+   {l:"Static",v:0,h:"Parked, posed and perfectly lit.",r:"f/8 · 1/125 · ISO 100"},{l:"Rolling",v:16,h:"Moving shots with the road in a blur.",r:"f/11 · 1/40 · ISO 100"},{l:"Details",v:0,h:"Close work on badges, wheels and lines.",r:"f/2.8 · 1/250 · ISO 200"}],def:0,msg:o=>"a car photo shoot ("+o.l.toLowerCase()+" shots)",cta:"Book a shoot",cam:[[-5.4,1.55,7.6],[0,.62,0]]},
+ {id:"wedding",tab:"Wedding video",tag:"Wedding",word:"Wedding",t:"#f4cdbb",paint:["#ece8e0",.2,.28],title:"Wedding videography",desc:"Your day filmed from start to finish and cut into a film you'll want to watch again.",label:"Coverage",opts:[
+   {l:"Highlight film",v:0,h:"The best moments in one short film.",r:"Highlight film"},{l:"Ceremony",v:1,h:"The vows and the aisle, in full.",r:"Ceremony"},{l:"Full day",v:2,h:"From getting ready to the last dance.",r:"Full day"}],def:2,msg:o=>"wedding videography ("+o.l.toLowerCase()+")",cta:"Check my date",cam:[[-6.5,2.1,5.2],[-.3,.62,0]]}
+];
+
+/* ---------- 3D car ---------- */
+function clamp(v,a,b){return Math.min(b,Math.max(a,v))}
+function smooth(a,b,x){const t=clamp((x-a)/(b-a),0,1);return t*t*(3-2*t)}
+function cr(keys,x){
+  let i=0;while(i<keys.length-2&&x>keys[i+1][0])i++;
+  const a=keys[Math.max(i-1,0)],b=keys[i],c=keys[i+1],d=keys[Math.min(i+2,keys.length-1)];
+  const t=clamp((x-b[0])/(c[0]-b[0]),0,1),o=[x];
+  for(let j=1;j<b.length;j++)o[j]=.5*(2*b[j]+(-a[j]+c[j])*t+(2*a[j]-5*b[j]+4*c[j]-d[j])*t*t+(-a[j]+3*b[j]-3*c[j]+d[j])*t*t*t);
+  return o;
+}
+function spow(v,p){return Math.sign(v)*Math.pow(Math.abs(v),p)}
+
+function init3D(canvas){
+  if(!window.THREE)return null;
+  const TH=THREE;let renderer;
+  try{renderer=new TH.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:"high-performance"})}catch(e){return null}
+  renderer.setClearColor(0,0);
+  renderer.toneMapping=TH.ACESFilmicToneMapping;
+  renderer.toneMappingExposure=1.08;
+  renderer.localClippingEnabled=true;
+  const scene=new TH.Scene(),camera=new TH.PerspectiveCamera(26,2,.1,120);
+
+  /* Studio lighting: strip softboxes that draw long highlights along the body */
+  const env=new TH.Scene();env.background=new TH.Color(0x05070a);
+  const box=(w,h,d,x,y,z,v,col)=>{const m=new TH.Mesh(new TH.BoxGeometry(w,h,d),new TH.MeshBasicMaterial({color:new TH.Color(col||0xffffff).multiplyScalar(v),side:TH.DoubleSide}));m.position.set(x,y,z);env.add(m)};
+  box(14,.1,1.5,0,7,0,16);box(14,.1,.6,0,7,3.2,9);box(14,.1,.6,0,7,-3.2,9);
+  box(16,1.1,.1,0,2.8,10,6);box(16,1.1,.1,0,2.8,-10,6);
+  box(.1,2,8,11,3,0,5);box(.1,2,8,-11,3,0,5);box(30,.1,30,0,-3,0,.18,0x8899aa);
+  const pm=new TH.PMREMGenerator(renderer);scene.environment=pm.fromScene(env,.015).texture;
+
+  const canvasTex=(w,h,draw,srgb)=>{const c=document.createElement("canvas");c.width=w;c.height=h;draw(c.getContext("2d"),w,h);const t=new TH.CanvasTexture(c);if(srgb)t.colorSpace=TH.SRGBColorSpace;t.anisotropy=8;return t};
+
+  function loft(N,M,fn,colored){
+    const pos=[],uv=[],col=[],idx=[];
+    for(let i=0;i<=N;i++)for(let j=0;j<=M;j++){const p=fn(i/N,j/M);pos.push(p[0],p[1],p[2]);uv.push(i/N,j/M);if(colored){const k=p[3]==null?1:p[3];col.push(k,k,k)}}
+    for(let i=0;i<N;i++)for(let j=0;j<M;j++){const a=i*(M+1)+j,b=(i+1)*(M+1)+j,c=a+1,d=b+1;idx.push(a,b,c,c,b,d)}
+    const g=new TH.BufferGeometry();g.setIndex(idx);g.setAttribute("position",new TH.Float32BufferAttribute(pos,3));g.setAttribute("uv",new TH.Float32BufferAttribute(uv,2));if(colored)g.setAttribute("color",new TH.Float32BufferAttribute(col,3));g.computeVertexNormals();return g;
+  }
+  function offset(g,d){const o=g.clone(),p=o.attributes.position,n=o.attributes.normal;for(let i=0;i<p.count;i++)p.setXYZ(i,p.getX(i)+n.getX(i)*d,p.getY(i)+n.getY(i)*d,p.getZ(i)+n.getZ(i)*d);return o}
+
+  const WHEELX=[-1.38,1.42],WR=.365;
+  const BK=[[-2.34,.02,.46,.5],[-2.31,.52,.3,.63],[-2.2,.8,.23,.72],[-1.95,.89,.21,.79],[-1.5,.93,.2,.86],[-.9,.95,.2,.94],[-.3,.96,.2,.99],[.6,.96,.2,1.01],[1.4,.95,.2,1.03],[1.9,.9,.22,1.05],[2.18,.78,.3,1.02],[2.31,.52,.42,.92],[2.34,.02,.66,.7]];
+  const bodyTop=x=>cr(BK,x)[3];
+  const bodyG=loft(280,120,(u,v)=>{
+    const x=-2.34+u*4.68,k=cr(BK,x),w=Math.max(k[1],.001),cy=(k[2]+k[3])/2,ry=(k[3]-k[2])/2,a=-Math.PI/2+v*2*Math.PI;
+    let z=w*spow(Math.cos(a),.42),y=cy+ry*spow(Math.sin(a),.5),c=1;
+    const low=smooth(.46,.26,y);z*=1-.05*low;
+    z*=1+.012*Math.exp(-Math.pow((y-.72)/.05,2));
+    for(const wx of WHEELX){const d=Math.hypot(x-wx,y-WR);if(d<.49&&Math.abs(z)>.3){const t=smooth(.49,.47,d);z=z+(Math.sign(z)*.58-z)*t;if(t>.02)c=.02}}
+    return[x,y,z,c];
+  },true);
+  const bodyMap=canvasTex(2048,1024,(g,W,H)=>{
+    g.fillStyle="#fff";g.fillRect(0,0,W,H);
+    const px=x=>(x+2.34)/4.68*W,py=v=>(1-v)*H;
+    g.fillStyle="#0b0c0f";g.fillRect(0,py(.135),W,py(0)-py(.135));g.fillRect(0,0,W,py(.865));
+    g.strokeStyle="#0d0e11";g.lineWidth=3.5;
+    for(const[a,b]of[[.18,.335],[.665,.82]])for(const x of[-.86,.08,.86]){g.beginPath();g.moveTo(px(x),py(a));g.lineTo(px(x+(x>.5?.1:0)),py(b));g.stroke()}
+  },true);
+
+  const paint=new TH.MeshPhysicalMaterial({color:0x1d2a3d,metalness:.6,roughness:.34,clearcoat:1,clearcoatRoughness:.04,envMapIntensity:1.25,map:bodyMap,vertexColors:true});
+  const car=new TH.Group();
+  car.add(new TH.Mesh(bodyG,paint));
+
+  /* Cabin */
+  const CK=[[-1.22,.62,0],[-.98,.76,.1],[-.42,.8,.35],[.05,.81,.43],[.72,.8,.44],[1.25,.76,.31],[1.68,.68,.1],[1.9,.56,0]];
+  const cabinG=loft(170,90,(u,v)=>{
+    const x=-1.22+u*3.12,k=cr(CK,x),h=Math.max(k[2],0),a=v*Math.PI,s=Math.sin(a),c=Math.cos(a),q=spow(s,.56);
+    return[x,bodyTop(x)-.035+h*q,k[1]*spow(c,.52)*(1-.2*q)];
+  });
+  const glassMask=(invert)=>canvasTex(2048,1024,(g,W,H)=>{
+    g.fillStyle=invert?"#fff":"#000";g.fillRect(0,0,W,H);g.fillStyle=invert?"#000":"#fff";
+    const P=(l,mir)=>{g.beginPath();l.forEach((p,i)=>{const X=p[0]*W,Y=(1-(mir?1-p[1]:p[1]))*H;i?g.lineTo(X,Y):g.moveTo(X,Y)});g.closePath();g.fill()};
+    for(const m of[0,1]){P([[.15,.018],[.565,.018],[.565,.26],[.34,.26]],m);P([[.595,.018],[.83,.018],[.74,.26],[.595,.26]],m)}
+    P([[.02,.3],[.345,.32],[.345,.68],[.02,.7]],0);
+    P([[.69,.33],[.965,.3],[.965,.7],[.69,.67]],0);
+  });
+  const cabinPaint=new TH.MeshPhysicalMaterial({color:0x1d2a3d,metalness:.6,roughness:.34,clearcoat:1,clearcoatRoughness:.04,envMapIntensity:1.25,alphaMap:glassMask(true),alphaTest:.5,side:TH.DoubleSide});
+  car.add(new TH.Mesh(cabinG,cabinPaint));
+  const mask=glassMask(false);
+  const glass=new TH.MeshPhysicalMaterial({color:0x9fb2c6,metalness:0,roughness:.03,transparent:true,opacity:.22,alphaMap:mask,alphaTest:.5,envMapIntensity:2.2,depthWrite:false});
+  const glassM=new TH.Mesh(offset(cabinG,.007),glass);glassM.renderOrder=4;car.add(glassM);
+  const clip=new TH.Plane(new TH.Vector3(1,0,0),3);
+  const film=new TH.MeshBasicMaterial({color:0x04060a,transparent:true,opacity:.76,alphaMap:mask,alphaTest:.5,depthWrite:false,clippingPlanes:[clip]});
+  const filmM=new TH.Mesh(offset(cabinG,.003),film);filmM.renderOrder=3;car.add(filmM);
+
+  /* Interior seen through the glass */
+  const seat=new TH.MeshStandardMaterial({color:0xc08b58,emissive:0x5c3518,roughness:.55});
+  for(const z of[-.36,.36]){for(const x of[-.02,.82]){const b=new TH.Mesh(new TH.BoxGeometry(.12,.26,.42),seat);b.position.set(x+.2,1.1,z);b.rotation.z=-.12;car.add(b);const c=new TH.Mesh(new TH.BoxGeometry(.09,.09,.22),seat);c.position.set(x+.18,1.28,z);car.add(c)}}
+  const dark=new TH.MeshStandardMaterial({color:0x08090c,roughness:.5,metalness:.2});
+  const dash=new TH.Mesh(new TH.BoxGeometry(.32,.14,1.34),dark);dash.position.set(-.52,1.02,0);car.add(dash);
+
+  /* Lights, grille, mirrors */
+  const emW=new TH.MeshBasicMaterial({color:new TH.Color(1,1,1).multiplyScalar(5)}),emR=new TH.MeshBasicMaterial({color:new TH.Color(1,.03,.04).multiplyScalar(4)});
+  const cap=(r,l,mat,x,y,z,ry)=>{const m=new TH.Mesh(new TH.CapsuleGeometry(r,l,4,10),mat);m.rotation.x=Math.PI/2;const p=new TH.Group();p.add(m);p.position.set(x,y,z);p.rotation.y=ry||0;car.add(p);return p};
+  for(const s of[-1,1]){cap(.017,.42,emW,-2.12,.715,s*.57,s*.95);cap(.009,.3,emW,-2.2,.53,s*.55,s*.55)}
+  cap(.016,1.3,emR,2.27,.885,0);
+  const grille=new TH.Mesh(new TH.BoxGeometry(.1,.18,.94),dark);grille.position.set(-2.27,.43,0);car.add(grille);
+  const diff=new TH.Mesh(new TH.BoxGeometry(.1,.14,1.04),dark);diff.position.set(2.27,.47,0);car.add(diff);
+  for(const s of[-1,1]){const m=new TH.Mesh(new TH.SphereGeometry(.09,20,14),paint);m.scale.set(.75,.62,1.25);m.position.set(-.62,1.14,s*.93);car.add(m);
+    for(const z of[.25,.5]){const t=new TH.Mesh(new TH.CylinderGeometry(.047,.047,.1,16),new TH.MeshStandardMaterial({color:0x8e939b,metalness:1,roughness:.2}));t.rotation.z=Math.PI/2;t.position.set(2.3,.36,s*z);car.add(t)}}
+
+  /* Plates */
+  const plateFace=(text,style)=>canvasTex(1024,232,(g,W,H)=>{
+    const st={std:["#f3f3ec","#14161b"],raised:["#ffcf33","#101217"],custom:["#0d1016","#ffcf33"],wed:["#fffaf4","#a8563e"]}[style]||["#f3f3ec","#14161b"];
+    g.fillStyle=st[0];g.fillRect(0,0,W,H);g.strokeStyle=st[1];g.lineWidth=12;g.strokeRect(14,14,W-28,H-28);
+    g.font='800 '+(text.length>10?128:168)+'px "Barlow Condensed","Arial Narrow",sans-serif';g.textAlign="center";g.textBaseline="middle";
+    if(style==="raised"){g.fillStyle="rgba(0,0,0,.35)";g.fillText(text,W/2+7,H/2+13)}
+    g.fillStyle=st[1];g.fillText(text,W/2,H/2+6);
+  },true);
+  const plateMat=new TH.MeshStandardMaterial({roughness:.35,metalness:.05,emissive:0xffffff,emissiveIntensity:.32});
+  const plateG=new TH.PlaneGeometry(.64,.145);
+  const rearP=new TH.Group();const rm=new TH.Mesh(plateG,plateMat);rm.rotation.y=Math.PI/2;rearP.add(rm);rearP.position.set(2.345,.64,0);rearP.name="rearP";car.add(rearP);
+  const fm=new TH.Mesh(plateG,plateMat);fm.rotation.y=-Math.PI/2;fm.position.set(-2.345,.36,0);car.add(fm);
+  function setPlate(text,style){const t=plateFace(text,style);plateMat.map&&plateMat.map.dispose();plateMat.map=t;plateMat.emissiveMap=t;plateMat.needsUpdate=true}
+
+  /* Wheels */
+  const tire=new TH.MeshPhysicalMaterial({color:0x08080a,roughness:.9,metalness:0,clearcoat:0,clearcoatRoughness:.2,envMapIntensity:1.4});
+  const rimM=new TH.MeshStandardMaterial({color:0xc6ccd4,metalness:1,roughness:.2,envMapIntensity:1.5}),hubM=new TH.MeshStandardMaterial({color:0x1b1d22,metalness:.8,roughness:.4});
+  const tp=[[.235,-.14],[.32,-.145],[.356,-.115],[.365,-.04],[.365,.04],[.356,.115],[.32,.145],[.235,.14]].map(p=>new TH.Vector2(p[0],p[1]));
+  const tyreG=new TH.LatheGeometry(tp,56);tyreG.rotateX(Math.PI/2);
+  const barrelG=new TH.CylinderGeometry(.238,.238,.27,48,1,true);barrelG.rotateX(Math.PI/2);
+  const discG=new TH.CylinderGeometry(.17,.17,.03,36);discG.rotateX(Math.PI/2);
+  const hubG=new TH.CylinderGeometry(.052,.058,.04,20);hubG.rotateX(Math.PI/2);
+  const spokeG=new TH.BoxGeometry(.2,.03,.024);
+  function wheel(x,zs){
+    const axle=new TH.Group();axle.name="wheel";
+    axle.add(new TH.Mesh(tyreG,tire));
+    const bm=new TH.Mesh(barrelG,new TH.MeshStandardMaterial({color:0x16181c,metalness:.9,roughness:.45,side:TH.DoubleSide}));axle.add(bm);
+    const disc=new TH.Mesh(discG,new TH.MeshStandardMaterial({color:0x777c84,metalness:1,roughness:.35}));disc.position.z=0;axle.add(disc);
+    const hub=new TH.Mesh(hubG,hubM);hub.position.z=zs*.115;axle.add(hub);
+    for(let i=0;i<5;i++)for(const off of[-.17,.17]){const h=new TH.Group();h.rotation.z=i*Math.PI*2/5+off;const sp=new TH.Mesh(spokeG,rimM);sp.position.set(.135,0,zs*.11);h.add(sp);axle.add(h)}
+    const lip=new TH.Mesh(new TH.TorusGeometry(.238,.009,8,56),rimM);lip.position.z=zs*.135;axle.add(lip);
+    axle.position.set(x,WR,zs*.79);car.add(axle);
+  }
+  for(const x of WHEELX)for(const s of[-1,1])wheel(x,s);
+
+  /* Ribbon + bow for the wedding car */
+  const ribbonG=loft(70,1,(u,v)=>{const x=-2.26+u*1.2;return[x,bodyTop(x)+.012,(v-.5)*.13]});
+  const ribbonM=new TH.MeshStandardMaterial({color:0xfdf2ea,roughness:.42,side:TH.DoubleSide,transparent:true,opacity:0});
+  const ribbon=new TH.Group();ribbon.add(new TH.Mesh(ribbonG,ribbonM));
+  for(const s of[-1,1]){const l=new TH.Mesh(new TH.TorusGeometry(.13,.026,10,30),ribbonM);l.scale.set(1.25,.55,1);l.position.set(-1.72,bodyTop(-1.72)+.1,s*.14);l.rotation.y=Math.PI/2;ribbon.add(l)}
+  car.add(ribbon);
+
+  /* Mirror image on the floor shares every material */
+  const mirror=car.clone(true);mirror.scale.y=-1;mirror.traverse(o=>{if(o.isMesh)o.renderOrder=-1});
+  const rig=new TH.Group();rig.add(mirror);rig.add(car);scene.add(rig);
+  const wheels=[];[car,mirror].forEach(g=>g.traverse(o=>{if(o.name==="wheel")wheels.push(o)}));
+
+  const floorA=canvasTex(512,512,(g,W)=>{const r=g.createRadialGradient(W/2,W/2,W*.2,W/2,W/2,W/2);r.addColorStop(0,"#d8d8d8");r.addColorStop(.55,"#b0b0b0");r.addColorStop(1,"#000");g.fillStyle=r;g.fillRect(0,0,W,W)});
+  const floor=new TH.Mesh(new TH.PlaneGeometry(34,34).rotateX(-Math.PI/2),new TH.MeshBasicMaterial({color:0x090c11,transparent:true,alphaMap:floorA,depthWrite:false,toneMapped:false}));floor.renderOrder=1;scene.add(floor);
+  const shadowT=canvasTex(512,256,(g,W,H)=>{g.translate(W/2,H/2);g.scale(1,.46);const r=g.createRadialGradient(0,0,10,0,0,W/2);r.addColorStop(0,"rgba(0,0,0,1)");r.addColorStop(.62,"rgba(0,0,0,.88)");r.addColorStop(1,"rgba(0,0,0,0)");g.fillStyle=r;g.fillRect(-W,-H*3,W*2,H*6)});
+  const shadow=new TH.Mesh(new TH.PlaneGeometry(6.4,3.1).rotateX(-Math.PI/2),new TH.MeshBasicMaterial({map:shadowT,transparent:true,depthWrite:false}));shadow.position.y=.004;shadow.renderOrder=2;rig.add(shadow);
+
+  const rim=new TH.DirectionalLight(0x74a7ff,2.2);rim.position.set(3,4,-7);scene.add(rim);
+  const key=new TH.DirectionalLight(0xffffff,.55);key.position.set(-5,6,6);scene.add(key);
+
+  /* Petals */
+  const PN=reduced?0:260,pp=new Float32Array(PN*3),seed=[];
+  for(let i=0;i<PN;i++){pp[i*3]=-4.5+Math.random()*9;pp[i*3+1]=Math.random()*4.6;pp[i*3+2]=-3+Math.random()*7;seed.push(Math.random()*6.28)}
+  const pg=new TH.BufferGeometry();pg.setAttribute("position",new TH.BufferAttribute(pp,3));
+  const dot=canvasTex(64,64,(g)=>{const r=g.createRadialGradient(32,32,2,32,32,30);r.addColorStop(0,"#fff");r.addColorStop(.75,"#ffe7dd");r.addColorStop(1,"rgba(255,231,221,0)");g.fillStyle=r;g.beginPath();g.ellipse(32,32,30,18,.6,0,7);g.fill()},true);
+  const petalM=new TH.PointsMaterial({size:.085,map:dot,transparent:true,opacity:0,depthWrite:false,color:0xffd5c8});
+  scene.add(new TH.Points(pg,petalM));
+
+  /* Sparkle on the tire */
+  const sparkT=canvasTex(128,128,(g)=>{g.translate(64,64);const r=g.createRadialGradient(0,0,1,0,0,22);r.addColorStop(0,"#fff");r.addColorStop(1,"rgba(255,255,255,0)");g.fillStyle=r;g.fillRect(-64,-64,128,128);g.fillStyle="#fff";for(let i=0;i<2;i++){g.rotate(Math.PI/2);g.beginPath();g.moveTo(-60,0);g.lineTo(0,-3);g.lineTo(60,0);g.lineTo(0,3);g.fill()}},true);
+  const sparkM=new TH.SpriteMaterial({map:sparkT,transparent:true,opacity:0,depthTest:false,blending:TH.AdditiveBlending});
+  const sparks=[[-1.56,.67,1.0],[-1.08,.26,1.0]].map(p=>{const s=new TH.Sprite(sparkM);s.position.set(p[0],p[1],p[2]);s.scale.setScalar(.34);rig.add(s);return s});
+
+  /* State */
+  const st={px:-5.4,py:1.55,pz:7.6,tx:0,ty:.62,tz:0,spin:0,ang:0,mx:0,my:0,rmx:0,rmy:0};
+  let W=0,H=0,alive=true,fit=1;
+  function resize(){const r=canvas.getBoundingClientRect();if(r.width===W&&r.height===H||!r.width)return;W=r.width;H=r.height;renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.setSize(W,H,false);camera.aspect=W/H;camera.updateProjectionMatrix();fit=Math.max(1,1.72/camera.aspect)}
+  new ResizeObserver(resize).observe(canvas);resize();
+  new IntersectionObserver(e=>{alive=e[0].isIntersecting}).observe(canvas);
+  if(matchMedia("(pointer:fine)").matches&&!reduced)$("#hero").addEventListener("pointermove",e=>{st.mx=e.clientX/innerWidth*2-1;st.my=e.clientY/innerHeight*2-1});
+
+  let lastX=rig.position.x;
+  function frame(_,dm){
+    if(!alive)return;
+    const dt=Math.min(dm,50)/1000;
+    st.rmx+=(st.mx-st.rmx)*.05;st.rmy+=(st.my-st.rmy)*.05;
+    st.ang+=st.spin*dt-(rig.position.x-lastX)/WR*1;lastX=rig.position.x;
+    wheels.forEach(w=>w.rotation.z=st.ang);
+    if(petalM.opacity>.01){const a=pg.attributes.position.array;for(let i=0;i<PN;i++){a[i*3+1]-=(.5+seed[i]*.05)*dt;a[i*3]+=Math.sin(performance.now()/900+seed[i])*.006;if(a[i*3+1]<0)a[i*3+1]=4.6}pg.attributes.position.needsUpdate=true}
+    camera.position.set(st.tx+(st.px-st.tx)*fit+st.rmx*.42,st.ty+(st.py-st.ty)*fit-st.rmy*.16,st.tz+(st.pz-st.tz)*fit);
+    camera.lookAt(st.tx,st.ty,st.tz);
+    renderer.render(scene,camera);
+  }
+  gsap.ticker.add(frame);
+
+  const col=new TH.Color();
+  const api={
+    rig,st,
+    paint(p,d){col.set(p[0]);[paint,cabinPaint].forEach(m=>{gsap.to(m.color,{r:col.r,g:col.g,b:col.b,duration:T(d),ease:"power2.inOut",overwrite:true});gsap.to(m,{metalness:p[1],roughness:p[2],duration:T(d)})})},
+    accent(hex){const c=new TH.Color(hex);gsap.to(rim.color,{r:c.r,g:c.g,b:c.b,duration:T(.9)})},
+    cam(c,d){gsap.to(st,{px:c[0][0],py:c[0][1],pz:c[0][2],tx:c[1][0],ty:c[1][1],tz:c[1][2],duration:T(d),ease:"power3.inOut",overwrite:"auto"})},
+    tint(v,wipe){gsap.killTweensOf(clip);gsap.killTweensOf(film);
+      if(wipe&&!reduced){gsap.set(film,{opacity:v});gsap.fromTo(clip,{constant:-1.95},{constant:1.5,duration:1.25,ease:"power2.inOut",delay:wipe===2?.65:0})}
+      else{gsap.set(clip,{constant:3});gsap.to(film,{opacity:v,duration:T(.4)})}},
+    plate(text,style,fly){setPlate(text,style);
+      if(fly&&!reduced){gsap.fromTo(rearP.position,{x:3.6,y:1.15},{x:2.345,y:.64,duration:.95,ease:"back.out(1.3)",delay:fly===2?.7:0,overwrite:true});gsap.fromTo(rearP.rotation,{z:.5,x:1.2},{z:0,x:0,duration:.95,ease:"power3.out",delay:fly===2?.7:0,overwrite:true})}},
+    tire(v,on){gsap.to(tire,{roughness:on?v[0]:.9,clearcoat:on?v[1]:0,duration:T(.9),delay:T(on?.45:0)});
+      if(on&&!reduced){gsap.fromTo(st,{spin:13},{spin:0,duration:2.6,ease:"power2.out",overwrite:false});gsap.fromTo(sparkM,{opacity:0},{opacity:1,duration:.3,delay:1,yoyo:true,repeat:3})}},
+    spin(v){gsap.to(st,{spin:reduced?0:v,duration:T(.8)})},
+    wedding(on){gsap.to(ribbonM,{opacity:on?1:0,duration:T(.8),delay:T(on?.5:0)});gsap.to(petalM,{opacity:on?.95:0,duration:T(.9)});ribbon.visible=true},
+    intro(){if(reduced)return;rig.position.x=14;lastX=14;gsap.to(rig.position,{x:0,duration:2.5,ease:"power3.out"})}
+  };
+  setPlate("STUDIO 473","raised");
+  if(document.fonts&&document.fonts.load)document.fonts.load('800 80px "Barlow Condensed"').then(()=>setPlate("STUDIO 473","raised"));
+  return api;
+}
+
+/* ---------- Page logic ---------- */
+const hero=$("#hero"),stage=$("#stage");
+let cur=0,sel=S.map(s=>s.def),timer=null,prog=null,auto=!reduced,vfTick=null;
+const tabs=$("#tabs"),words=$("#words");
+S.forEach((s,i)=>{
+  const w=document.createElement("span");w.className="word";w.textContent=s.word;words.appendChild(w);
+  const b=document.createElement("button");b.type="button";b.className="tab";b.id="tab-"+s.id;b.setAttribute("role","tab");b.innerHTML='<small>'+s.tag+'</small>'+s.tab+'<span></span>';
+  b.addEventListener("click",()=>{stopAuto();go(i)});tabs.appendChild(b);
+});
+const wordEls=$$(".word"),tabEls=$$(".tab");
+function fitWords(){const max=stage.clientWidth;wordEls.forEach(w=>{w.style.fontSize="";if(w.offsetWidth>max)w.style.fontSize=parseFloat(getComputedStyle(w).fontSize)*max/w.offsetWidth+"px"})}
+fitWords();addEventListener("resize",fitWords);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitWords);
+const hasGsap=!!window.gsap;
+let G=null;
+if(hasGsap){try{G=init3D($("#car"))}catch(e){console.error(e);G=null}}
+if(!G)stage.classList.add("no3d");
+
+function plateFor(s,o){if(s.id==="wedding")return["JUST MARRIED","wed"];if(s.id==="plates")return["STUDIO 473",o.v];return["STUDIO 473","raised"]}
+function stopAuto(){auto=false;if(timer)timer.kill();if(prog)prog.kill();tabEls.forEach(t=>{gsap.set($("span",t),{clearProps:"transform"})})}
+function schedule(){
+  if(!auto||!hasGsap)return;
+  if(timer)timer.kill();if(prog)prog.kill();
+  const bar=$("span",tabEls[cur]);
+  prog=gsap.fromTo(bar,{scaleX:0},{scaleX:1,duration:7,ease:"none",onComplete(){go((cur+1)%S.length)}});
+  timer=prog;
+}
+function renderPanel(i){
+  const s=S[i],o=s.opts[sel[i]];
+  $("#p-tag").textContent="Service "+(i+1)+" of "+S.length;
+  $("#p-title").textContent=s.title;$("#p-desc").textContent=s.desc;$("#p-label").textContent=s.label;
+  const box=$("#opts");box.setAttribute("aria-label",s.label);box.innerHTML="";
+  s.opts.forEach((op,k)=>{const b=document.createElement("button");b.type="button";b.className="opt";b.textContent=op.l;b.setAttribute("aria-pressed",k===sel[i]);b.addEventListener("click",()=>{stopAuto();pick(k)});box.appendChild(b)});
+  renderOpt(i);
+  const th=$("#thumbs"),p=PICS[s.id];th.innerHTML="";
+  p.slice(0,3).forEach((x,k)=>{const b=document.createElement("button");b.type="button";b.className="thumb";b.setAttribute("aria-label","View photo: "+x[1]);b.innerHTML='<img src="media/'+x[0]+'.jpg" alt="">';b.addEventListener("click",()=>openLb(p,k));th.appendChild(b)});
+  if(p.length>3){const m=document.createElement("button");m.type="button";m.className="more";m.textContent="+"+(p.length-3);m.setAttribute("aria-label","View all "+p.length+" photos");m.addEventListener("click",()=>openLb(p,3));th.appendChild(m)}
+}
+function renderOpt(i){
+  const s=S[i],o=s.opts[sel[i]];
+  $("#p-hint").textContent=o.h;$("#readout").textContent=o.r;
+  const text="Hi Studio 473, I'd like "+s.msg(o)+". What's the price and your next open time?";
+  const a=$("#p-cta");a.href=wa(text);a.innerHTML=ICON+s.cta+" on WhatsApp";
+  $("#p-preview").textContent="Opens WhatsApp with: “"+text+"”";
+}
+function vfMode(s){
+  const vf=$("#vf"),t=$("#vf-text");if(vfTick){clearInterval(vfTick);vfTick=null}
+  vf.classList.toggle("on",s.id==="photo"||s.id==="wedding");vf.classList.toggle("still",s.id==="photo");
+  if(s.id==="photo")t.textContent="RAW  4:3";
+  if(s.id==="wedding"){let n=0;const up=()=>{n++;t.textContent="REC 00:"+String(Math.floor(n/60)).padStart(2,"0")+":"+String(n%60).padStart(2,"0")};up();if(!reduced)vfTick=setInterval(up,1000)}
+}
+function flash(n){if(reduced||!hasGsap)return;const f=$("#flash");gsap.killTweensOf(f);const tl=gsap.timeline();for(let i=0;i<n;i++)tl.fromTo(f,{opacity:.9},{opacity:0,duration:.42,ease:"power2.out"},.75+i*.62)}
+function effects(s,o,first){
+  if(!G)return;
+  const fly=first?2:1;
+  G.wedding(s.id==="wedding");
+  const pl=plateFor(s,o);G.plate(pl[0],pl[1],s.id==="plates"?fly:0);
+  G.tire(s.id==="shine"?o.v:null,s.id==="shine");
+  G.spin(s.id==="photo"?o.v:0);
+  if(s.id==="tint")G.tint(o.v,first?2:1);
+  if(s.id==="photo")flash(first?2:1);
+}
+function go(i,boot){
+  const s=S[i],prev=cur;cur=i;
+  hero.style.setProperty("--t",s.t);
+  tabEls.forEach((t,k)=>{t.setAttribute("aria-selected",k===i);gsap&&gsap.set($("span",t),{scaleX:k===i?1:0})});
+  const scroller=tabs;if(scroller.scrollWidth>scroller.clientWidth)scroller.scrollTo({left:tabEls[i].offsetLeft-16,behavior:reduced?"auto":"smooth"});
+  renderPanel(i);vfMode(s);
+  wordEls.forEach((w,k)=>w.classList.toggle("on",k===i||k===prev));
+  if(hasGsap){
+    if(!boot&&!reduced&&prev!==i){
+      gsap.killTweensOf(wordEls);
+      wordEls.forEach((w,k)=>{if(k!==i&&k!==prev)gsap.set(w,{yPercent:0,autoAlpha:0})});
+      gsap.to(wordEls[prev],{yPercent:-60,autoAlpha:0,duration:.55,ease:"power2.in"});
+      gsap.fromTo(wordEls[i],{yPercent:60,autoAlpha:0},{yPercent:0,autoAlpha:1,duration:.9,ease:"power3.out",delay:.12});
+      gsap.fromTo("#panel > *",{y:12,opacity:.2},{y:0,opacity:1,duration:.5,stagger:.05,ease:"power2.out"});
+    }else{wordEls.forEach((w,k)=>gsap.set(w,{yPercent:0,autoAlpha:k===i?1:0}))}
+  }
+  if(G){G.paint(s.paint,boot?0:1.1);G.accent(s.t);G.cam(s.cam,boot?0:1.7);effects(s,s.opts[sel[i]],!boot)}
+  if(auto&&hero.dataset.seen!=="no")schedule();
+}
+function pick(k){
+  sel[cur]=k;$$(".opt").forEach((b,n)=>b.setAttribute("aria-pressed",n===k));renderOpt(cur);
+  const s=S[cur],o=s.opts[k];
+  if(!G)return;
+  if(s.id==="tint")G.tint(o.v,1);
+  if(s.id==="plates"){G.plate("STUDIO 473",o.v,1)}
+  if(s.id==="shine")G.tire(o.v,true);
+  if(s.id==="photo"){G.spin(o.v);flash(1)}
+}
+
+if(hasGsap){
+  go(0,true);
+  if(G)G.intro();
+  new IntersectionObserver(e=>{const seen=e[0].isIntersecting;hero.dataset.seen=seen?"yes":"no";if(!auto||!prog)return;seen?prog.resume():prog.pause()},{threshold:.35}).observe(hero);
+}else{
+  window.gsap={set(){},to(){},fromTo(){},killTweensOf(){}};go(0,true);
+}
+
+/* videos load and play only while visible */
+$$("video[data-src]").forEach(v=>{
+  new IntersectionObserver(e=>{
+    if(e[0].isIntersecting){if(!v.src)v.src=v.dataset.src;if(!reduced){const p=v.play();p&&p.catch(()=>{})}}else v.pause();
+  },{rootMargin:"200px"}).observe(v);
+});
+
+/* lightbox */
+const lb=$("#lb"),lbI=$("#lb-img"),lbC=$("#lb-count");let lbL=[],lbN=0,lbFrom=null;
+function lbShow(){const p=lbL[lbN];lbI.src="media/"+p[0]+".jpg";lbI.alt=p[1];lbC.textContent=(lbN+1)+" / "+lbL.length+"  "+p[1]}
+function openLb(list,i){lbL=list;lbN=i;lbFrom=document.activeElement;lbShow();lb.hidden=false;$("#lb-close").focus();stopAutoSoft()}
+function stopAutoSoft(){if(prog)prog.pause()}
+function closeLb(){lb.hidden=true;if(lbFrom)lbFrom.focus();if(auto&&prog)prog.resume()}
+function step(d){lbN=(lbN+d+lbL.length)%lbL.length;lbShow()}
+$("#lb-close").addEventListener("click",closeLb);$("#lb-prev").addEventListener("click",()=>step(-1));$("#lb-next").addEventListener("click",()=>step(1));
+lb.addEventListener("click",e=>{if(e.target===lb)closeLb()});
+addEventListener("keydown",e=>{if(lb.hidden)return;if(e.key==="Escape")closeLb();if(e.key==="ArrowRight")step(1);if(e.key==="ArrowLeft")step(-1)});
+$$("[data-gal]").forEach(b=>b.addEventListener("click",()=>openLb(PICS[b.dataset.gal],+b.dataset.i)));
+const ALL=[PICS.photo[0],PICS.wedding[1],PICS.shine[0],PICS.tint[0],PICS.wedding[3],PICS.photo[1],PICS.shine[1],PICS.wedding[4],PICS.photo[3],PICS.plates[0],PICS.wedding[5],PICS.shine[2]];
+const gal=$("#gal");ALL.forEach((p,i)=>{const b=document.createElement("button");b.type="button";b.setAttribute("aria-label","View photo: "+p[1]);b.innerHTML='<img loading="lazy" src="media/'+p[0]+'.jpg" alt="">';b.addEventListener("click",()=>openLb(ALL,i));gal.appendChild(b)});
+
+/* booking form builds a live WhatsApp link */
+const nm=$("#book-name"),sv=$("#book-service"),dt=$("#book-detail"),send=$("#book-send");
+function buildSend(){
+  const name=nm.value.trim(),det=dt.value.trim();
+  const t="Hi Studio 473"+(name?", this is "+name:"")+". I'd like to book: "+sv.value+(det?" ("+det+")":"")+". What's the price and your next open time?";
+  send.href=wa(t);send.innerHTML=ICON+"Send on WhatsApp";
+}
+[nm,sv,dt].forEach(el=>el.addEventListener("input",buildSend));buildSend();
+$("#form").addEventListener("submit",e=>e.preventDefault());
+$("#copy").addEventListener("click",function(){
+  const b=this,ok=()=>{b.textContent="Copied";setTimeout(()=>b.textContent="Copy number",1800)};
+  const fail=()=>{const r=document.createRange();r.selectNodeContents($("#number"));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Press copy"};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText("+14734585646").then(ok,fail);else fail();
+});
+})();
+</script>
+
+</body>
+</html>
