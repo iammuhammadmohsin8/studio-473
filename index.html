@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Studio 473</title>
+<title>CarDesigner</title>
 <meta name="theme-color" content="#090c11">
 <meta name="description" content="Window tint, number plates, tire shine, car photography and wedding videography. Book on WhatsApp.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -207,7 +207,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 30px;justify-content:space-bet
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="#home">STUDIO 473</a>
+    <a class="logo" href="#home">CARDESIGNER</a>
     <nav class="nav" aria-label="Main">
       <a href="#cars">Cars</a>
       <a href="#weddings">Weddings</a>
@@ -262,19 +262,19 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 30px;justify-content:space-bet
         <p>Four jobs, done carefully. Message us your car's make and model and we'll tell you what it needs.</p>
       </div>
       <div class="cards">
-        <a class="card" target="_blank" rel="noopener" href="https://wa.me/14734585646?text=Hi%20Studio%20473%2C%20I%27d%20like%20to%20ask%20about%20window%20tint.">
+        <a class="card" target="_blank" rel="noopener" href="https://wa.me/14734585646?text=Hi%20CarDesigner%2C%20I%27d%20like%20to%20ask%20about%20window%20tint.">
           <figure><img loading="lazy" src="media/tint-1.jpg" alt="Silver sedan with dark tinted windows"></figure>
           <div><h3>Window tint</h3><p>Privacy and a sleeker look, in the shade you choose.</p><span class="go">Ask about tint</span></div>
         </a>
-        <a class="card" target="_blank" rel="noopener" href="https://wa.me/14734585646?text=Hi%20Studio%20473%2C%20I%27d%20like%20to%20ask%20about%20number%20plates.">
+        <a class="card" target="_blank" rel="noopener" href="https://wa.me/14734585646?text=Hi%20CarDesigner%2C%20I%27d%20like%20to%20ask%20about%20number%20plates.">
           <figure><img loading="lazy" src="media/plate-1.jpg" alt="Number plate on the back of a dark car"></figure>
           <div><h3>Number plates</h3><p>Clean, sharp plates made for your registration.</p><span class="go">Ask about plates</span></div>
         </a>
-        <a class="card" target="_blank" rel="noopener" href="https://wa.me/14734585646?text=Hi%20Studio%20473%2C%20I%27d%20like%20to%20ask%20about%20tire%20shine.">
+        <a class="card" target="_blank" rel="noopener" href="https://wa.me/14734585646?text=Hi%20CarDesigner%2C%20I%27d%20like%20to%20ask%20about%20tire%20shine.">
           <figure><img loading="lazy" src="media/shine-1.jpg" alt="Close view of a polished alloy wheel and black tire"></figure>
           <div><h3>Tire shine</h3><p>Deep black sidewalls, from satin to wet look.</p><span class="go">Ask about tire shine</span></div>
         </a>
-        <a class="card" target="_blank" rel="noopener" href="https://wa.me/14734585646?text=Hi%20Studio%20473%2C%20I%27d%20like%20to%20book%20car%20photography.">
+        <a class="card" target="_blank" rel="noopener" href="https://wa.me/14734585646?text=Hi%20CarDesigner%2C%20I%27d%20like%20to%20book%20car%20photography.">
           <figure><img loading="lazy" src="media/photo-1.jpg" alt="White supercar photographed on a coastal road"></figure>
           <div><h3>Car photography</h3><p>Photos for sale listings, social media or your wall.</p><span class="go">Book a shoot</span></div>
         </a>
@@ -355,7 +355,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 30px;justify-content:space-bet
 
 <footer>
   <div class="wrap">
-    <a class="logo" href="#home">STUDIO 473</a>
+    <a class="logo" href="#home">CARDESIGNER</a>
     <span>Window tint · Number plates · Tire shine · Car photography · Wedding videography</span>
     <span>Photos: Unsplash. Video: Pexels.</span>
   </div>
@@ -546,6 +546,7 @@ function init3D(canvas){
     axle.position.set(x,WR,zs*.79);car.add(axle);
   }
   for(const x of WHEELX)for(const s of[-1,1])wheel(x,s);
+  for(const x of WHEELX)for(const s of[-1,1]){const r=new TH.Mesh(new TH.TorusGeometry(.48,.045,10,64,Math.PI*1.16),dark);r.rotation.z=-Math.PI*.08;r.position.set(x,WR,s*cr(BK,x)[1]*.975);car.add(r)}
 
   /* Ribbon + bow for the wedding car */
   const ribbonG=loft(70,1,(u,v)=>{const x=-2.26+u*1.2;return[x,bodyTop(x)+.012,(v-.5)*.13]});
@@ -619,19 +620,19 @@ function init3D(canvas){
     wedding(on){gsap.to(ribbonM,{opacity:on?1:0,duration:T(.8),delay:T(on?.5:0)});gsap.to(petalM,{opacity:on?.95:0,duration:T(.9)});ribbon.visible=true},
     intro(){if(reduced)return;rig.position.x=14;lastX=14;gsap.to(rig.position,{x:0,duration:2.5,ease:"power3.out"})}
   };
-  setPlate("STUDIO 473","raised");
-  if(document.fonts&&document.fonts.load)document.fonts.load('800 80px "Barlow Condensed"').then(()=>setPlate("STUDIO 473","raised"));
+  setPlate("CARDESIGNER","raised");
+  if(document.fonts&&document.fonts.load)document.fonts.load('800 80px "Barlow Condensed"').then(()=>setPlate("CARDESIGNER","raised"));
   return api;
 }
 
 /* ---------- Page logic ---------- */
 const hero=$("#hero"),stage=$("#stage");
-let cur=0,sel=S.map(s=>s.def),timer=null,prog=null,auto=!reduced,vfTick=null;
+let cur=0,sel=S.map(s=>s.def),timer=null,prog=null,auto=true,vfTick=null;
 const tabs=$("#tabs"),words=$("#words");
 S.forEach((s,i)=>{
   const w=document.createElement("span");w.className="word";w.textContent=s.word;words.appendChild(w);
   const b=document.createElement("button");b.type="button";b.className="tab";b.id="tab-"+s.id;b.setAttribute("role","tab");b.innerHTML='<small>'+s.tag+'</small>'+s.tab+'<span></span>';
-  b.addEventListener("click",()=>{stopAuto();go(i)});tabs.appendChild(b);
+  b.addEventListener("click",()=>go(i));tabs.appendChild(b);
 });
 const wordEls=$$(".word"),tabEls=$$(".tab");
 function fitWords(){const max=stage.clientWidth;wordEls.forEach(w=>{w.style.fontSize="";if(w.offsetWidth>max)w.style.fontSize=parseFloat(getComputedStyle(w).fontSize)*max/w.offsetWidth+"px"})}
@@ -641,8 +642,7 @@ let G=null;
 if(hasGsap){try{G=init3D($("#car"))}catch(e){console.error(e);G=null}}
 if(!G)stage.classList.add("no3d");
 
-function plateFor(s,o){if(s.id==="wedding")return["JUST MARRIED","wed"];if(s.id==="plates")return["STUDIO 473",o.v];return["STUDIO 473","raised"]}
-function stopAuto(){auto=false;if(timer)timer.kill();if(prog)prog.kill();tabEls.forEach(t=>{gsap.set($("span",t),{clearProps:"transform"})})}
+function plateFor(s,o){if(s.id==="wedding")return["JUST MARRIED","wed"];if(s.id==="plates")return["CARDESIGNER",o.v];return["CARDESIGNER","raised"]}
 function schedule(){
   if(!auto||!hasGsap)return;
   if(timer)timer.kill();if(prog)prog.kill();
@@ -655,7 +655,7 @@ function renderPanel(i){
   $("#p-tag").textContent="Service "+(i+1)+" of "+S.length;
   $("#p-title").textContent=s.title;$("#p-desc").textContent=s.desc;$("#p-label").textContent=s.label;
   const box=$("#opts");box.setAttribute("aria-label",s.label);box.innerHTML="";
-  s.opts.forEach((op,k)=>{const b=document.createElement("button");b.type="button";b.className="opt";b.textContent=op.l;b.setAttribute("aria-pressed",k===sel[i]);b.addEventListener("click",()=>{stopAuto();pick(k)});box.appendChild(b)});
+  s.opts.forEach((op,k)=>{const b=document.createElement("button");b.type="button";b.className="opt";b.textContent=op.l;b.setAttribute("aria-pressed",k===sel[i]);b.addEventListener("click",()=>{pick(k);schedule()});box.appendChild(b)});
   renderOpt(i);
   const th=$("#thumbs"),p=PICS[s.id];th.innerHTML="";
   p.slice(0,3).forEach((x,k)=>{const b=document.createElement("button");b.type="button";b.className="thumb";b.setAttribute("aria-label","View photo: "+x[1]);b.innerHTML='<img src="media/'+x[0]+'.jpg" alt="">';b.addEventListener("click",()=>openLb(p,k));th.appendChild(b)});
@@ -664,7 +664,7 @@ function renderPanel(i){
 function renderOpt(i){
   const s=S[i],o=s.opts[sel[i]];
   $("#p-hint").textContent=o.h;$("#readout").textContent=o.r;
-  const text="Hi Studio 473, I'd like "+s.msg(o)+". What's the price and your next open time?";
+  const text="Hi CarDesigner, I'd like "+s.msg(o)+". What's the price and your next open time?";
   const a=$("#p-cta");a.href=wa(text);a.innerHTML=ICON+s.cta+" on WhatsApp";
   $("#p-preview").textContent="Opens WhatsApp with: “"+text+"”";
 }
@@ -709,7 +709,7 @@ function pick(k){
   const s=S[cur],o=s.opts[k];
   if(!G)return;
   if(s.id==="tint")G.tint(o.v,1);
-  if(s.id==="plates"){G.plate("STUDIO 473",o.v,1)}
+  if(s.id==="plates"){G.plate("CARDESIGNER",o.v,1)}
   if(s.id==="shine")G.tire(o.v,true);
   if(s.id==="photo"){G.spin(o.v);flash(1)}
 }
@@ -717,7 +717,7 @@ function pick(k){
 if(hasGsap){
   go(0,true);
   if(G)G.intro();
-  new IntersectionObserver(e=>{const seen=e[0].isIntersecting;hero.dataset.seen=seen?"yes":"no";if(!auto||!prog)return;seen?prog.resume():prog.pause()},{threshold:.35}).observe(hero);
+  new IntersectionObserver(e=>{const seen=e[0].isIntersecting;hero.dataset.seen=seen?"yes":"no";if(!auto||!prog)return;seen?prog.resume():prog.pause()},{threshold:.15}).observe(hero);
 }else{
   window.gsap={set(){},to(){},fromTo(){},killTweensOf(){}};go(0,true);
 }
@@ -747,7 +747,7 @@ const gal=$("#gal");ALL.forEach((p,i)=>{const b=document.createElement("button")
 const nm=$("#book-name"),sv=$("#book-service"),dt=$("#book-detail"),send=$("#book-send");
 function buildSend(){
   const name=nm.value.trim(),det=dt.value.trim();
-  const t="Hi Studio 473"+(name?", this is "+name:"")+". I'd like to book: "+sv.value+(det?" ("+det+")":"")+". What's the price and your next open time?";
+  const t="Hi CarDesigner"+(name?", this is "+name:"")+". I'd like to book: "+sv.value+(det?" ("+det+")":"")+". What's the price and your next open time?";
   send.href=wa(t);send.innerHTML=ICON+"Send on WhatsApp";
 }
 [nm,sv,dt].forEach(el=>el.addEventListener("input",buildSend));buildSend();
